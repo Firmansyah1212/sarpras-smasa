@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 
 export async function POST() {
   const cookieStore = await cookies();
-
   cookieStore.delete("sarpras_admin");
 
   return NextResponse.json({ message: "Logout berhasil." });
