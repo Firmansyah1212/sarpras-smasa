@@ -78,14 +78,12 @@ export default function HomePage() {
   <div className="mx-auto max-w-6xl">
     <div className="flex flex-col items-center gap-4 md:flex-row">
       <Image
-        src="/Logo_sman1jember.png"
-        alt="Logo SMA Negeri 1 Jember"
-        width={90}
-        height={90}
-        priority
-        className="rounded-full bg-white p-2"
-      />
-
+  src="/Logo_sman1jember.png"
+  alt="Logo SMA Negeri 1 Jember"
+  width={90}
+  height={90}
+  priority
+/>
       <div>
         <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-blue-100">
           SMA Negeri 1 Jember
