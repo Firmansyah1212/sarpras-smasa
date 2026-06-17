@@ -1,6 +1,21 @@
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import { formatTanggal, STATUS_LABEL } from "@/lib/utils";
+
+function formatTanggal(date: Date) {
+  return new Date(date).toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  MENUNGGU: "Menunggu",
+  DISETUJUI: "Disetujui",
+  DITOLAK: "Ditolak",
+  SELESAI: "Selesai",
+};
 
 export default async function BuktiPage({
   params,
@@ -33,63 +48,29 @@ export default async function BuktiPage({
               Bukti Persetujuan Peminjaman Sarpras
             </h1>
             <p className="font-semibold">SMA Negeri 1 Jember</p>
-            <p className="text-sm text-slate-500">
-              Dicetak sebagai bukti pengajuan peminjaman sarpras sekolah.
-            </p>
           </div>
         </div>
 
         <div className="mt-6 text-sm">
           <p>
-            Nomor Bukti:{" "}
-            <b>SARPRAS-{String(data.id).padStart(4, "0")}</b>
+            Nomor Bukti: <b>SARPRAS-{String(data.id).padStart(4, "0")}</b>
           </p>
           <p>
-            Status: <b>{STATUS_LABEL[data.status]}</b>
+            Status: <b>{STATUS_LABEL[data.status] || data.status}</b>
           </p>
         </div>
 
         <table className="mt-6 w-full text-sm">
           <tbody>
-            <tr>
-              <td className="w-44 py-2 font-semibold">Nama Peminjam</td>
-              <td>: {data.nama}</td>
-            </tr>
-            <tr>
-              <td className="py-2 font-semibold">Bagian/Instansi</td>
-              <td>: {data.bagian}</td>
-            </tr>
-            <tr>
-              <td className="py-2 font-semibold">Nomor HP</td>
-              <td>: {data.noHp}</td>
-            </tr>
-            <tr>
-              <td className="py-2 font-semibold">Ruangan</td>
-              <td>: {data.ruangan}</td>
-            </tr>
-            <tr>
-              <td className="py-2 font-semibold">Tanggal</td>
-              <td>: {formatTanggal(data.tanggal)}</td>
-            </tr>
-            <tr>
-              <td className="py-2 font-semibold">Waktu</td>
-              <td>
-                : {data.jamMulai} - {data.jamSelesai}
-              </td>
-            </tr>
-            <tr>
-              <td className="py-2 font-semibold">Keperluan</td>
-              <td>: {data.keperluan}</td>
-            </tr>
+            <tr><td className="w-44 py-2 font-semibold">Nama Peminjam</td><td>: {data.nama}</td></tr>
+            <tr><td className="py-2 font-semibold">Bagian/Instansi</td><td>: {data.bagian}</td></tr>
+            <tr><td className="py-2 font-semibold">Nomor HP</td><td>: {data.noHp}</td></tr>
+            <tr><td className="py-2 font-semibold">Ruangan</td><td>: {data.ruangan}</td></tr>
+            <tr><td className="py-2 font-semibold">Tanggal</td><td>: {formatTanggal(data.tanggal)}</td></tr>
+            <tr><td className="py-2 font-semibold">Waktu</td><td>: {data.jamMulai} - {data.jamSelesai}</td></tr>
+            <tr><td className="py-2 font-semibold">Keperluan</td><td>: {data.keperluan}</td></tr>
           </tbody>
         </table>
-
-        <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
-          <p>
-            Bukti ini berlaku apabila status peminjaman telah disetujui oleh
-            admin/pengelola sarpras.
-          </p>
-        </div>
 
         <div className="mt-10 flex justify-between text-sm">
           <div>
@@ -106,20 +87,13 @@ export default async function BuktiPage({
           </div>
         </div>
 
-        <div className="mt-8 flex gap-3 print:hidden">
+        <div className="mt-8 print:hidden">
           <button
             onClick={() => window.print()}
             className="rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white"
           >
             Cetak / Simpan PDF
           </button>
-
-          <a
-            href="/"
-            className="rounded-xl bg-slate-200 px-5 py-3 font-semibold text-slate-700"
-          >
-            Kembali
-          </a>
         </div>
       </div>
     </main>
