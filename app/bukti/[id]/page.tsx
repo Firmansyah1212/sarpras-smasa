@@ -87,14 +87,18 @@ export default async function BuktiPage({
           </div>
         </div>
 
-        <div className="mt-8 print:hidden">
-          <button
-            onClick={() => window.print()}
-            className="rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white"
-          >
-            Cetak / Simpan PDF
-          </button>
-        </div>
+       <div className="mt-8 flex gap-3 print:hidden">
+  <a
+    href="/"
+    className="rounded-xl bg-slate-200 px-5 py-3 font-semibold text-slate-700"
+  >
+    Kembali
+  </a>
+
+  <p className="flex items-center text-sm text-slate-500">
+    Tekan Ctrl + P untuk mencetak atau menyimpan PDF
+  </p>
+</div>
       </div>
     </main>
   );
