@@ -81,9 +81,9 @@ export default async function BuktiPage({
 
           <div className="text-center">
             <p>Mengetahui,</p>
-            <p>Pengelola Sarpras</p>
+            <p>Waka Sarpras</p>
             <div className="h-20"></div>
-            <p className="font-semibold">Admin Sarpras</p>
+            <p className="font-semibold">R. Slamet Agus Wahyudi, S.Sos.</p>
           </div>
         </div>
 
