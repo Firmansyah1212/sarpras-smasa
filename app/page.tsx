@@ -38,70 +38,33 @@ export default function HomePage() {
   }, [jadwal, filterRuangan]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setMessage("");
-    setLoading(true);
+  e.preventDefault();
 
-    const form = new FormData(e.currentTarget);
+  setLoading(true);
+  setMessage("");
 
-    const payload = {
-      nama: form.get("nama"),
-      bagian: form.get("bagian"),
-      noHp: form.get("noHp"),
-      ruangan: form.get("ruangan"),
-      tanggal: form.get("tanggal"),
-      jamMulai: form.get("jamMulai"),
-      jamSelesai: form.get("jamSelesai"),
-      keperluan: form.get("keperluan"),
-    };
+  const formData = new FormData(e.currentTarget);
 
-    const res = await fetch("/api/peminjaman", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+  const res = await fetch("/api/peminjaman", {
+    method: "POST",
+    body: formData,
+  });
 
-    const data = await res.json();
-    setMessage(data.message || "Terjadi kesalahan.");
+  const data = await res.json();
 
-    if (res.ok) {
-      e.currentTarget.reset();
-      loadJadwal();
-    }
+  setMessage(data.message || "");
 
-    setLoading(false);
+  if (res.ok) {
+    e.currentTarget.reset();
+    loadJadwal();
   }
+
+  setLoading(false);
+}
 
   return (
     <main className="min-h-screen bg-slate-100">
-      <section className="bg-gradient-to-r from-blue-800 to-blue-600 px-6 py-10 text-white">
-  <div className="mx-auto max-w-6xl">
-    <div className="flex flex-col items-center gap-4 md:flex-row">
-      <Image
-  src="/Logo_sman1jember.png"
-  alt="Logo SMA Negeri 1 Jember"
-  width={90}
-  height={90}
-  priority
-/>
-      <div>
-        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-blue-100">
-          SMA Negeri 1 Jember
-        </p>
-
-        <h1 className="text-3xl font-bold md:text-5xl">
-          Sistem Peminjaman Sarpras
-        </h1>
-
-        <p className="mt-3 max-w-2xl text-blue-50">
-          Ajukan peminjaman Aula Madya, Aula Djarkasi, dan Aula Pratama.
-          Sistem akan otomatis menolak jadwal yang bentrok.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+<header />
       <section className="mx-auto grid max-w-6xl gap-6 px-6 py-8 lg:grid-cols-[420px_1fr]">
         <form
           onSubmit={handleSubmit}
@@ -136,7 +99,23 @@ export default function HomePage() {
               rows={4}
               className="w-full rounded-xl border border-slate-300 p-3"
             />
+<div>
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Upload Surat Permohonan (PDF)
+  </label>
 
+  <input
+    type="file"
+    name="surat"
+    accept=".pdf,application/pdf"
+    required
+    className="w-full rounded-xl border border-slate-300 p-3"
+  />
+
+  <p className="mt-1 text-xs text-slate-500">
+    Maksimal ukuran file 5 MB.
+  </p>
+</div>
             <button
               disabled={loading}
               className="w-full rounded-xl bg-blue-700 p-3 font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
